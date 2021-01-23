@@ -1,18 +1,22 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+  <div class="container">
+    <div class="mt-5">
+      <AppSearch />
+      <p>Nombre des annonces : 3 annonces</p>
+      <AppTable />
+    </div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+import AppSearch from "@/components/app/AppSearch.vue";
+import AppTable from "@/components/app/AppTable.vue";
 
 export default {
   name: "Home",
   components: {
-    HelloWorld
+    AppSearch,
+    AppTable
   }
 };
 </script>
