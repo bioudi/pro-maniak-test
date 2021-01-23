@@ -2,7 +2,11 @@
   <div class="container">
     <div class="mt-5">
       <h2 class="text-center mb-5">Ajouter une nouvelle annonce</h2>
-      <form method="post" novalidate="novalidate" @submit.prevent="createAd">
+      <form
+        method="post"
+        novalidate="novalidate"
+        @submit.prevent="handleCreateAd"
+      >
         <div class="row justify-content-center mb-5">
           <div class="col-lg-4">
             <div class="form-group">
@@ -143,12 +147,15 @@ export default {
     ...mapActions("newAd", {
       getBrands: "GET_BRANDS",
       getField: "GET_FIELD",
-      createAd: "CREATE_AD"
+      createAd: "CREATE_AD",
     }),
     getRange(start, end) {
       return Array(end - start + 1)
         .fill()
         .map((_, idx) => start + idx);
+    },
+    handleCreateAd() {
+      this.createAd().then(() => this.$router.push({ name: "Home" }));
     },
   },
   watch: {

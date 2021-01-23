@@ -20,6 +20,13 @@ export default {
     return axios.get(query).then((response) => response.data.data);
   },
   createAd(payload) {
-    return axios.post("vehicles", payload).then(response => response.data.data);
+    const vehicle = {
+      model_car_id: payload.model,
+      gearbox: payload.gearbox,
+      vehicle_first_traffic_year: payload.year
+    };
+    return axios
+      .post("owner_vehicles", vehicle)
+      .then((response) => response.data.data);
   },
 };
