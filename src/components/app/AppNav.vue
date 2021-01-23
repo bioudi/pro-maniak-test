@@ -20,24 +20,41 @@
         </button>
         <div id="navbars" class="collapse navbar-collapse">
           <ul class="navbar-nav mr-auto nav nav-tabs border-bottom-0 mt-3">
-            <li
-              class="nav-item mx-2"
-              v-for="(item, index) in menuItems"
-              :key="index"
-            >
-              <router-link
-                :to="item.path"
-                :class="{
-                  'active bg-warning text-white border-warning':
-                    $route.path === item.path
-                }"
-                class="nav-link"
-                >{{ item.name }}</router-link
+            <template v-for="(item, index) in menuItems">
+              <li
+                class="nav-item mx-2"
+                v-if="!item.requireAuth || isLoggedIn"
+                :key="index"
               >
-            </li>
+                <router-link
+                  :to="item.path"
+                  :class="{
+                    'active bg-warning text-white border-warning':
+                      $route.path === item.path,
+                  }"
+                  class="nav-link"
+                  >{{ item.name }}</router-link
+                >
+              </li>
+            </template>
           </ul>
-          <button type="button" class="btn nav-link p-1 mt-3 text-muted">
-            se déconnecter
+          <template v-if="isLoggedIn">
+            <span>{{ pseudo }}</span>
+            <button
+              @click="logout"
+              type="button"
+              class="btn nav-link p-1 mt-3 text-muted ml-2"
+            >
+              se deconnecter
+            </button>
+          </template>
+          <button
+            v-else
+            @click="$router.push({ name: 'Login' })"
+            type="button"
+            class="btn nav-link p-1 mt-3 text-muted"
+          >
+            se connecter
           </button>
         </div>
       </div>
@@ -46,6 +63,8 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
+
 export default {
   name: "AppNav",
   data() {
@@ -53,15 +72,28 @@ export default {
       menuItems: [
         {
           name: "Home",
-          path: "/"
+          path: "/",
+          requireAuth: false,
         },
         {
           name: "Ajouter annonce",
-          path: "/ads/add"
-        }
-      ]
-    }
-  }
+          path: "/ads/add",
+          requireAuth: true,
+        },
+      ],
+    };
+  },
+  computed: {
+    ...mapState("auth", {
+      isLoggedIn: (state) => state.status.loggedIn,
+      pseudo: (state) => state.user.name,
+    }),
+  },
+  methods: {
+    ...mapActions("auth", {
+      logout: "LOGOUT",
+    }),
+  },
 };
 </script>
 
