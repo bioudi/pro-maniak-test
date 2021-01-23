@@ -20,26 +20,19 @@
         </button>
         <div id="navbars" class="collapse navbar-collapse">
           <ul class="navbar-nav mr-auto nav nav-tabs border-bottom-0 mt-3">
-            <li class="nav-item mx-2">
+            <li
+              class="nav-item mx-2"
+              v-for="(item, index) in menuItems"
+              :key="index"
+            >
               <router-link
-                to="/"
+                :to="item.path"
                 :class="{
                   'active bg-warning text-white border-warning':
-                    $route.path === '/'
+                    $route.path === item.path
                 }"
                 class="nav-link"
-                >Home</router-link
-              >
-            </li>
-            <li class="nav-item mx-2">
-              <router-link
-                to="/ads/add"
-                :class="{
-                  'active bg-warning text-white border-warning':
-                    $route.path === '/ads/add'
-                }"
-                class="nav-link"
-                >Ajouter annonce</router-link
+                >{{ item.name }}</router-link
               >
             </li>
           </ul>
@@ -54,7 +47,21 @@
 
 <script>
 export default {
-  name: "AppNav"
+  name: "AppNav",
+  data() {
+    return {
+      menuItems: [
+        {
+          name: "Home",
+          path: "/"
+        },
+        {
+          name: "Ajouter annonce",
+          path: "/ads/add"
+        }
+      ]
+    }
+  }
 };
 </script>
 
