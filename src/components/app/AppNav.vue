@@ -38,16 +38,16 @@
               </li>
             </template>
           </ul>
-          <template v-if="isLoggedIn">
+          <div class="d-flex align-items-center mt-3" v-if="isLoggedIn">
             <span>{{ pseudo }}</span>
             <button
               @click="logout"
               type="button"
-              class="btn nav-link p-1 mt-3 text-muted ml-2"
+              class="btn nav-link text-muted ml-4"
             >
               se deconnecter
             </button>
-          </template>
+          </div>
           <button
             v-else
             @click="$router.push({ name: 'Login' })"

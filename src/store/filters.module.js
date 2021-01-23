@@ -1,46 +1,38 @@
-import adFieldsService from "@/services/adFields.service";
+import FiltersService from "@/services/filters.service";
 
-export const newAd = {
+export const filters = {
   namespaced: true,
   state: {
     brands: [],
     models: [],
     powersCv: [],
     minYear: 1990,
-    maxYear: new Date().getFullYear(),
-    ad: {
-      brandId: null,
-      year: null,
-      fuel: null,
-      model: null,
-      powerCv: null,
-      gearbox: null,
-    },
+    maxYear: new Date().getFullYear()
   },
   getters: {
-    fuels: (state) => {
+    fuels: state => {
       let version_cars = [];
-      Object.keys(state.models).forEach((key) =>
+      Object.keys(state.models).forEach(key =>
         version_cars.push(...state.models[key].version_cars)
       );
       return version_cars
-        .map((version) => version.fuel)
+        .map(version => version.fuel)
         .filter((value, index, self) => self.indexOf(value) === index);
     },
-    gearbox: (state) =>
+    gearbox: state =>
       state.powersCv
-        .map((item) => item.gearbox)
-        .filter((value, index, self) => self.indexOf(value) === index),
+        .map(item => item.gearbox)
+        .filter((value, index, self) => self.indexOf(value) === index)
   },
   actions: {
     GET_BRANDS({ commit, state }) {
       if (state.brands.length > 0) return;
-      return adFieldsService
-        .getBrands()
-        .then((brands) => commit("SET_BRANDS", brands));
+      return FiltersService.getBrands().then(brands =>
+        commit("SET_BRANDS", brands)
+      );
     },
-    GET_FIELD({ state, commit }, type) {
-      return adFieldsService.getField(state.ad).then((response) => {
+    GET_FIELD({ commit }, { payload, type }) {
+      return FiltersService.getField(payload).then(response => {
         switch (type) {
           case "models":
             commit("SET_MODELS", response.models);
@@ -52,9 +44,6 @@ export const newAd = {
             break;
         }
       });
-    },
-    CREATE_AD({ state }) {
-      return adFieldsService.createAd(state.ad)
     }
   },
   mutations: {
@@ -66,6 +55,6 @@ export const newAd = {
     },
     SET_POWER_CV(state, power) {
       state.powersCv = power;
-    },
-  },
+    }
+  }
 };

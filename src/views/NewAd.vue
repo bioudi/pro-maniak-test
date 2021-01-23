@@ -123,62 +123,24 @@
   </div>
 </template>
 <script>
-import { mapActions, mapGetters, mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
+import fieldsMixin from "@/mixins/fiedsMixin.js";
+
 export default {
   name: "NewAd",
-  mounted() {
-    this.getBrands();
-  },
+  mixins: [fieldsMixin],
   computed: {
-    ...mapState("newAd", {
-      brands: (state) => state.brands,
-      models: (state) => state.models,
-      powersCv: (state) => state.powersCv,
-      minYear: (state) => state.minYear,
-      maxYear: (state) => state.maxYear,
-      ad: (state) => state.ad,
-    }),
-    ...mapGetters("newAd", {
-      fuels: "fuels",
-      gearbox: "gearbox",
-    }),
+    ...mapState("ads", {
+      ad: state => state.ad
+    })
   },
   methods: {
-    ...mapActions("newAd", {
-      getBrands: "GET_BRANDS",
-      getField: "GET_FIELD",
-      createAd: "CREATE_AD",
+    ...mapActions("ads", {
+      createAd: "CREATE_AD"
     }),
-    getRange(start, end) {
-      return Array(end - start + 1)
-        .fill()
-        .map((_, idx) => start + idx);
-    },
     handleCreateAd() {
       this.createAd().then(() => this.$router.push({ name: "Home" }));
-    },
-  },
-  watch: {
-    "ad.year": function() {
-      this.getField("models");
-      this.ad.fuel = null;
-      this.ad.model = null;
-      this.ad.powerCv = null;
-      this.ad.gearbox = null;
-    },
-    "ad.fuel": function() {
-      this.ad.model = null;
-      this.ad.powerCv = null;
-      this.ad.gearbox = null;
-    },
-    "ad.model": function() {
-      this.getField("version_car");
-      this.ad.powerCv = null;
-      this.ad.gearbox = null;
-    },
-    "ad.powerCv": function() {
-      this.ad.gearbox = null;
-    },
-  },
+    }
+  }
 };
 </script>

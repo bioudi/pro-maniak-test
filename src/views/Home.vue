@@ -2,7 +2,6 @@
   <div class="container">
     <div class="mt-5">
       <AppSearch />
-      <p>Nombre des annonces : 3 annonces</p>
       <AppTable />
     </div>
   </div>

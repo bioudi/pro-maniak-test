@@ -2,7 +2,7 @@ import axios from "axios";
 
 export default {
   getBrands() {
-    return axios.get("brand_cars").then((response) => response.data.data.items);
+    return axios.get("brand_cars").then(response => response.data.data.items);
   },
   getField(payload) {
     let query = `brand_cars/${payload.brandId}/model_cars`;
@@ -17,16 +17,6 @@ export default {
 
     if (payload.gearbox) query += `&gearbox=${payload.gearbox}`;
 
-    return axios.get(query).then((response) => response.data.data);
-  },
-  createAd(payload) {
-    const vehicle = {
-      model_car_id: payload.model,
-      gearbox: payload.gearbox,
-      vehicle_first_traffic_year: payload.year
-    };
-    return axios
-      .post("owner_vehicles", vehicle)
-      .then((response) => response.data.data);
-  },
+    return axios.get(query).then(response => response.data.data);
+  }
 };

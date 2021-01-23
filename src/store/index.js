@@ -2,13 +2,15 @@ import Vue from "vue";
 import Vuex from "vuex";
 
 import { auth } from "./auth.module";
-import { newAd } from "./newAd.module";
+import { filters } from "./filters.module";
+import { ads } from "./ads.module";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: {
     auth,
-    newAd
+    filters,
+    ads
   }
 });
