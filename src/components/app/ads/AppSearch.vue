@@ -9,6 +9,7 @@
               placeholder="Marque"
               class="form-control bg-light text-muted"
               v-model="ad.brandId"
+              required
             >
               <option
                 :value="brand.id"
@@ -22,9 +23,11 @@
         <div class="col-lg-2">
           <div class="form-group">
             <select
+              :disabled="!ad.brandId"
               placeholder="Année"
               class="form-control bg-light text-muted"
               v-model="ad.year"
+              required
             >
               <option
                 v-for="(year, index) in getRange(minYear, maxYear)"
@@ -37,9 +40,11 @@
         <div class="col-lg-3">
           <div class="form-group">
             <select
+              :disabled="!ad.year"
               placeholder="Carburant"
               class="form-control bg-light text-muted"
               v-model="ad.fuel"
+              required
             >
               <option v-for="(fuel, index) in fuels" :key="index">{{
                 fuel
@@ -50,9 +55,11 @@
         <div class="col-lg-3">
           <div class="form-group">
             <select
+              :disabled="!ad.fuel"
               placeholder="Modèle"
-              class="form-control text-muted"
+              class="form-control bg-light text-muted"
               v-model="ad.modelId"
+              required
             >
               <option
                 v-for="(model, index) in models"
@@ -100,12 +107,12 @@ export default {
   mixins: [fieldsMixin],
   computed: {
     ...mapState("ads", {
-      ad: (state) => state.filters,
+      ad: state => state.filters
     }),
     ...mapActions("ads", {
-      getAds: "GET_ADS",
-    }),
-  },
+      getAds: "GET_ADS"
+    })
+  }
 };
 </script>
 

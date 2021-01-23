@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import AppSearch from "@/components/app/AppSearch.vue";
-import AppTable from "@/components/app/AppTable.vue";
+import AppSearch from "@/components/app/ads/AppSearch.vue";
+import AppTable from "@/components/app/ads/AppTable.vue";
 
 export default {
   name: "Home",

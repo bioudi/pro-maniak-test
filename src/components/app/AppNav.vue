@@ -30,7 +30,7 @@
                   :to="item.path"
                   :class="{
                     'active bg-warning text-white border-warning':
-                      $route.path === item.path,
+                      $route.path === item.path
                   }"
                   class="nav-link"
                   >{{ item.name }}</router-link
@@ -73,27 +73,27 @@ export default {
         {
           name: "Home",
           path: "/",
-          requireAuth: false,
+          requireAuth: false
         },
         {
           name: "Ajouter annonce",
           path: "/ads/add",
-          requireAuth: true,
-        },
-      ],
+          requireAuth: true
+        }
+      ]
     };
   },
   computed: {
     ...mapState("auth", {
-      isLoggedIn: (state) => state.status.loggedIn,
-      pseudo: (state) => state.user.name,
-    }),
+      isLoggedIn: state => state.status.loggedIn,
+      pseudo: state => state.user.name
+    })
   },
   methods: {
     ...mapActions("auth", {
-      logout: "LOGOUT",
-    }),
-  },
+      logout: "LOGOUT"
+    })
+  }
 };
 </script>
 

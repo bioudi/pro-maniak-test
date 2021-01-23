@@ -30,9 +30,9 @@ export default {
   name: "AppTable",
   computed: {
     ...mapState("ads", {
-      ads: (state) => state.ads,
-    }),
-  },
+      ads: state => state.ads
+    })
+  }
 };
 </script>
 
